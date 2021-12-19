@@ -141,8 +141,7 @@ namespace zasm
 
         if (n == _state->head)
         {
-            auto* newHead = detail::toInternal(n->getNext());
-            _state->head = pre;
+            _state->head = post;
 
             if (pre != nullptr)
             {
@@ -182,6 +181,18 @@ namespace zasm
         _state->nodeCount--;
 
         return post;
+    }
+
+    const Node* Program::moveAfter(const Node* pos, const Node* node)
+    {
+        detach(node);
+        return insertAfter(pos, node);
+    }
+
+    const Node* Program::moveBefore(const Node* pos, const Node* node)
+    {
+        detach(node);
+        return insertBefore(pos, node);
     }
 
     void Program::destroy(const Node* node)
